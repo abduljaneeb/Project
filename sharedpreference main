@@ -1,0 +1,66 @@
+package com.example.myapplication;
+
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText username, number, email, password, conpassword;
+    Button SUBMIT;
+    SharedPreferences.Editor editor;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        username = findViewById(R.id.username);
+        number = findViewById(R.id.number);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        conpassword = findViewById(R.id.conpassword);
+        View submit = findViewById(R.id.loginbtn);
+
+        editor = getSharedPreferences("userDetails", MODE_PRIVATE).edit();
+
+        submit.setOnClickListener(v -> {
+        String name = username.getText().toString().trim();
+        String phone = number.getText().toString().trim();
+        String mail = email.getText().toString().trim();
+        String pass = password.getText().toString().trim();
+        String confirm = conpassword.getText().toString().trim();
+
+        if (name.isEmpty() || phone.isEmpty() || mail.isEmpty() || pass.isEmpty()) {
+            Toast.makeText(this, "please fill the columns remain", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (pass.length() < 6) {
+            password.setError("minimum 6 characters");
+            return;
+        }
+        if (!pass.equals(confirm)) {
+            conpassword.setError("password do not match");
+            return;
+        }
+
+        editor.putString("key username", name);
+        editor.putString("key number", phone);
+        editor.putString("email", mail);
+        editor.putString("password", pass);
+        editor.apply();
+
+        Toast.makeText(this, "registration is successfully", Toast.LENGTH_SHORT).show();
+
+    });
+}
+}
