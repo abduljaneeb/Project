@@ -1,0 +1,23 @@
+import math
+
+tx, ty =1, 2
+sx, sy =2, 2
+theta=math.radians(45)
+
+
+T=[[1,0,tx],
+   [0,1,ty],
+   [0,0,1]]
+
+R=[[math.cos(theta), -math.sin(theta),0],
+   [math.sin(theta), math.cos(theta),0]
+   ,[0,0,1]]
+
+S=[[sx,0,0],
+  [0,sy,0],
+   [0,0,1]]
+
+
+print("Trabslation Matrix : \n", T)
+print("rotation Matrix : \n", R)
+print("scaling matrix : \n", S)
