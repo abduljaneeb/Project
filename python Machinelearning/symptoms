@@ -1,0 +1,29 @@
+# Load the required package
+library(e1071)
+
+# Read the CSV file into a data frame
+symptoms <- read.csv("symptoms.csv")
+
+# Prepare Training Data (features)
+symptoms_train <- symptoms[, 1:4]
+
+# Prepare Test Data (example input to classify)
+symptoms_test <- data.frame(
+  Chills = "Y",
+  RunningNose = "N",
+  Headache = "mild",
+  Fever = "Y"
+)
+
+# Build Naive Bayes Classifier
+classifier_model <- naiveBayes(symptoms_train, symptoms$HasFlu)
+
+# Display Prior and Conditional Probabilities
+print(classifier_model)
+
+# Predict Flu Result for Test Data
+prediction <- predict(classifier_model, symptoms_test)
+
+# Display Output
+cat("Prediction of Flu :\n")
+print(prediction)
